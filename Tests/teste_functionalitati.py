@@ -1,20 +1,25 @@
-from Domain.vanzari import get_pret, get_gen
+from Domain.vanzari import get_pret, get_gen, creeaza_vanzare
 from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu
 
 
 def test_aplicare_discount():
-    vanzare1 = {"id": "1", "titlu_carte": "Ragdoll", "gen_carte": "thriller", "pret": 50, "tip_reducere": "silver"}
-    vanzare2 = {"id": "2", "titlu_carte": "Winnetou", "gen_carte": "aventura", "pret": 45, "tip_reducere": "gold"}
+
+    #vanzare1 = ["1", "Ragdoll", "thriller", 50, "gold"]
+    #vanzare2 = ["2", "Winnetou", "aventura", 45, "none"]
+    vanzare1 = creeaza_vanzare("1", "Ragdoll", "thriller", 50, "silver")
+    vanzare2 = creeaza_vanzare("2", "Winnetou", "aventura", 45, "gold")
     lista = []
     lista.append(vanzare1)
     lista.append(vanzare2)
     aplicare_discount(lista)
+
     assert get_pret(lista[0]) == 47.5
     assert get_pret(lista[1]) == 40.5
 
 def test_modificare_gen_pentru_titlu():
-    vanzare1 = {"id": "1", "titlu_carte": "Ragdoll", "gen_carte": "thriller", "pret": 50, "tip_reducere": "silver"}
-    vanzare2 = {"id": "2", "titlu_carte": "Winnetou", "gen_carte": "aventura", "pret": 45, "tip_reducere": "gold"}
+    vanzare1 = creeaza_vanzare("1", "Ragdoll", "thriller", 50, "silver")
+    vanzare2 = creeaza_vanzare("2", "Winnetou", "aventura", 45, "gold")
+
     lista = []
     lista.append(vanzare1)
     lista.append(vanzare2)
