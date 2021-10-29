@@ -9,7 +9,13 @@ def creeaza_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere):
     :return: o vanzare sub forma de dictionar
     '''
 
-    return [id, titlu_carte, gen_carte, pret, tip_reducere]
+    return {
+        "id" : id,
+        "titlu": titlu_carte,
+        "gen": gen_carte,
+        "pret" : pret,
+        "reducere" : tip_reducere
+    }
 
 
 def get_id(vanzare):
@@ -18,7 +24,7 @@ def get_id(vanzare):
     :param vanzare:
     :return: id
     '''
-    return vanzare[0]
+    return vanzare["id"]
 
 def get_titlu(vanzare):
     '''
@@ -26,7 +32,7 @@ def get_titlu(vanzare):
     :param vanzare:
     :return: titlul
     '''
-    return vanzare[1]
+    return vanzare["titlu"]
 
 def get_gen(vanzare):
     '''
@@ -34,7 +40,7 @@ def get_gen(vanzare):
     :param vanzare:
     :return: gen
     '''
-    return vanzare[2]
+    return vanzare["gen"]
 
 def get_pret(vanzare):
     '''
@@ -42,7 +48,7 @@ def get_pret(vanzare):
     :param vanzare:
     :return: pretul
     '''
-    return vanzare[3]
+    return float(vanzare["pret"])
 
 def get_reducere(vanzare):
     '''
@@ -50,7 +56,7 @@ def get_reducere(vanzare):
     :param vanzare:
     :return: tip reducere
     '''
-    return vanzare[4]
+    return vanzare["reducere"]
 
 def to_string(vanzare):
     '''
@@ -73,7 +79,7 @@ def set_pret(vanzare, pret_nou):
     :param pret_nou:
     :return:
     '''
-    vanzare[3] = pret_nou
+    vanzare["pret"] = pret_nou
 
 def set_gen(vanzare, gen_nou):
     '''
@@ -82,4 +88,4 @@ def set_gen(vanzare, gen_nou):
     :param pret_nou:
     :return:
     '''
-    vanzare[2] = gen_nou
+    vanzare["gen"] = gen_nou

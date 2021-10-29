@@ -36,6 +36,7 @@ def test_modificare_vanzare():
     lista = modificare_vanzare("1", "Morcoveata", "Thriller", 35, "silver", lista)
 
     vanzare_actualizata = get_by_id("1", lista)
+
     assert get_id(vanzare_actualizata) == "1"
     assert get_titlu(vanzare_actualizata) == "Morcoveata"
     assert get_gen(vanzare_actualizata) == "Thriller"

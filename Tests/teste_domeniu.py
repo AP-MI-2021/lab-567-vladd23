@@ -10,9 +10,9 @@ def test_domeniu():
     assert get_titlu(vanzare1) == "Ragdoll"
     assert get_id(vanzare1) == "1"
     assert get_gen(vanzare1) == "thriller"
-    assert get_pret(vanzare1) == 50
+    assert get_pret(vanzare1) == 50.0
     assert get_reducere(vanzare1) == "silver"
-    set_pret(vanzare1, 40)
-    assert get_pret(vanzare1) == 40
+    set_pret(vanzare1, 40.2)
+    assert get_pret(vanzare1) == 40.2
     set_gen(vanzare1, "actiune")
     assert get_gen(vanzare1) == "actiune"
