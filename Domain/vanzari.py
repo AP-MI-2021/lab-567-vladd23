@@ -13,7 +13,7 @@ def creeaza_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere):
         "id" : id,
         "titlu": titlu_carte,
         "gen": gen_carte,
-        "pret" : pret,
+        "pret": pret,
         "reducere" : tip_reducere
     }
 
@@ -85,7 +85,7 @@ def set_gen(vanzare, gen_nou):
     '''
     Inlocuieste un gen de cart cu altul nou
     :param vanzare:
-    :param pret_nou:
+    :param gen_nou:
     :return:
     '''
     vanzare["gen"] = gen_nou

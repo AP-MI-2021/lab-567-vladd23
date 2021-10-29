@@ -1,4 +1,4 @@
-from Domain.vanzari import get_reducere, get_pret, set_pret, get_titlu, set_gen
+from Domain.vanzari import get_reducere, get_pret, set_pret, get_titlu, set_gen, get_gen
 
 
 def aplicare_discount(lista):
@@ -32,3 +32,22 @@ def modificare_gen_pentru_titlu(lista, titlu, gen_nou):
             set_gen(vanzare, gen_nou)
 
     return lista
+
+def pret_minim_per_gen(lista):
+    '''
+    Functie care calculeaza pretul minim al unei vanzari pentru fiecare gen de carte
+    :param lista: lista de vanzari
+    :return: dictionar in care cheia este genul si
+    valoarea o reprezinta pretul minim al vanzarii din genul respectiv
+    '''
+    rezultat = {}
+    for vanzare in lista:
+        gen = get_gen(vanzare)
+        pret = get_pret(vanzare)
+        if gen in rezultat:
+            if pret < rezultat[gen]:
+                rezultat[gen] = get_pret(vanzare)
+        else:
+            rezultat[gen] = get_pret(vanzare)
+
+    return rezultat

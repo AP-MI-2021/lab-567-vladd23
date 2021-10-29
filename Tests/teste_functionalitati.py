@@ -1,5 +1,6 @@
 from Domain.vanzari import get_pret, get_gen, creeaza_vanzare
-from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu
+from Logic.CRUD import generare_lista
+from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen
 
 
 def test_aplicare_discount():
@@ -25,3 +26,12 @@ def test_modificare_gen_pentru_titlu():
     lista.append(vanzare2)
     modificare_gen_pentru_titlu(lista, "Ragdoll", "actiune")
     assert get_gen(lista[0]) == "actiune"
+
+def test_pret_minim_per_gen():
+    lista = generare_lista()
+    rezultat = pret_minim_per_gen(lista)
+
+    assert rezultat["Aventura"] == 50
+    assert rezultat["Drama"] == 45
+    assert rezultat["Thriller"] == 76
+

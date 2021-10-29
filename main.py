@@ -5,7 +5,6 @@ from UserInterface.consola import run_menu
 
 def main():
     all_tests()
-    lista = []
     lista = generare_lista()
     run_menu(lista)
 
