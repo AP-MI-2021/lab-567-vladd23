@@ -52,6 +52,7 @@ def pret_minim_per_gen(lista):
 
     return rezultat
 
+
 def sortare_in_functie_de_pret(lista):
     '''
     Functie care sorteaza lista crescator in functie de pret
@@ -59,3 +60,29 @@ def sortare_in_functie_de_pret(lista):
     :return: lista de vanzari sortata
     '''
     return sorted(lista, key=lambda x: get_pret(x))
+
+def nr_titluri_gen(gen, lista):
+    lista_titluri = []
+    for vanzare in lista:
+        if get_gen(vanzare) == gen:
+            lista_titluri.append(get_titlu(vanzare))
+
+    set_lista_titluri = set(lista_titluri)
+    lista_fara_duplicatii = list(set_lista_titluri)
+
+    return len(lista_fara_duplicatii)
+
+def nr_titluri_distincte_pe_gen(lista):
+    '''
+    Functie care determina pentru fiecare gen, numarul de titluri distincte
+    :param lista: lista de vanzari
+    :return: dictionar care are ca si cheie numele genului,
+    iar ca valoare numarul de titluri distincte pentru acel gen
+    '''
+    rezultat = {}
+    for vanzare in lista:
+        gen = get_gen(vanzare)
+        if gen not in rezultat:
+            rezultat[gen] = nr_titluri_gen(gen, lista)
+
+    return rezultat

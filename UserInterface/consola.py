@@ -1,7 +1,7 @@
 from Domain.vanzari import to_string
 from Logic.CRUD import adaugare_vanzare, stergere_vanzare, modificare_vanzare
 from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen, \
-    sortare_in_functie_de_pret
+    sortare_in_functie_de_pret, nr_titluri_distincte_pe_gen
 
 
 def print_menu():
@@ -13,6 +13,7 @@ def print_menu():
     print("5. Modificarea genului pentru un titlu dat")
     print("6. Determinarea prețului minim pentru fiecare gen")
     print("7. Ordonarea vânzărilor crescător după preț")
+    print("8. Afișarea numărului de titluri distincte pentru fiecare gen")
     print()
     print("a. Afisarea vanzarilor")
     print("x. Iesire")
@@ -105,6 +106,20 @@ def ui_ordonare_in_functie_de_pret(lista):
     return lista
 
 
+def ui_nr_titluri_distincte_per_gen(lista):
+    '''
+    Functie care determina numarul de titluri distincte pentru fiecare gen
+    :param lista: lista de vanzari
+    :return: lista de vanzari
+    '''
+    rezultat = nr_titluri_distincte_pe_gen(lista)
+
+    for cheie in rezultat:
+        print(cheie, ":", rezultat[cheie], "titluri distincte")
+
+    return lista
+
+
 def run_menu(lista):
     while True:
         print()
@@ -125,6 +140,8 @@ def run_menu(lista):
             lista = ui_pret_minim_gen(lista)
         elif optiune == "7":
             lista = ui_ordonare_in_functie_de_pret(lista)
+        elif optiune == "8":
+            lista = ui_nr_titluri_distincte_per_gen(lista)
         elif optiune == "a":
             show_all(lista)
         elif optiune == "x":

@@ -1,7 +1,7 @@
-from Domain.vanzari import get_pret, get_gen, creeaza_vanzare
+from Domain.vanzari import get_pret, get_gen, creeaza_vanzare, get_id
 from Logic.CRUD import generare_lista
 from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen, \
-    sortare_in_functie_de_pret
+    sortare_in_functie_de_pret, nr_titluri_distincte_pe_gen
 
 
 def test_aplicare_discount():
@@ -39,5 +39,13 @@ def test_pret_minim_per_gen():
 def test_sortare_in_functie_de_pret():
     lista = generare_lista()
     lista = sortare_in_functie_de_pret(lista)
+    assert get_id(lista[0]) == "4"
+    assert get_pret(lista[0]) < get_pret(lista[1])
+    assert get_id(lista[1]) == "5"
 
-
+def test_nr_titluri_distincte_pe_gen():
+    lista = generare_lista()
+    rezultat = nr_titluri_distincte_pe_gen(lista)
+    assert rezultat["Aventura"] == 2
+    assert rezultat["Thriller"] == 1
+    assert rezultat["Biografie"] == 1

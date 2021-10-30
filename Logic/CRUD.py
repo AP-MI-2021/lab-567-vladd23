@@ -70,5 +70,6 @@ def generare_lista():
     lista = adaugare_vanzare("4", "Becoming, Paperback", "Biografie", 37, "none", lista)
     lista = adaugare_vanzare("5", "Lantul", "Drama", 45, "silver", lista)
     lista = adaugare_vanzare("6", "Pacienta tacuta", "Drama", 55, "gold", lista)
+    lista = adaugare_vanzare("7", "Winnetou", "Aventura", 55, "silver", lista)
 
     return lista
