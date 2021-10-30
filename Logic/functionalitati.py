@@ -51,3 +51,11 @@ def pret_minim_per_gen(lista):
             rezultat[gen] = get_pret(vanzare)
 
     return rezultat
+
+def sortare_in_functie_de_pret(lista):
+    '''
+    Functie care sorteaza lista crescator in functie de pret
+    :param lista: lista de vanzari
+    :return: lista de vanzari sortata
+    '''
+    return sorted(lista, key=lambda x: get_pret(x))

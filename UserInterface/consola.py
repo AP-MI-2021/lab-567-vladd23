@@ -1,17 +1,22 @@
 from Domain.vanzari import to_string
 from Logic.CRUD import adaugare_vanzare, stergere_vanzare, modificare_vanzare
-from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen
+from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen, \
+    sortare_in_functie_de_pret
 
 
 def print_menu():
+    print()
     print("1. Adaugare vanzare")
     print("2. Stergere vanzare")
     print("3. Modificare vanzare")
     print("4. Aplicare discount")
     print("5. Modificarea genului pentru un titlu dat")
     print("6. Determinarea prețului minim pentru fiecare gen")
+    print("7. Ordonarea vânzărilor crescător după preț")
+    print()
     print("a. Afisarea vanzarilor")
     print("x. Iesire")
+    print()
 
 
 def ui_adaugare_vanzare(lista):
@@ -70,7 +75,7 @@ def ui_modificare_gen(lista):
     '''
     Modifica genul unei carti cu titlul introdus de la tastatura
     :param lista:
-    :return:
+    :return: lista cu modificarile efectuate
     '''
     titlu = input("Titlul cartii pe care doriti sa il modificati: ")
     gen_nou = input("Noul gen pentru cartea cu titlul selectat: ")
@@ -78,10 +83,25 @@ def ui_modificare_gen(lista):
 
 
 def ui_pret_minim_gen(lista):
+    '''
+    Afiseaza pretul minim pentru fiecare gen
+    :param lista: lista de vanzari
+    :return:
+    '''
     rezultat = pret_minim_per_gen(lista)
     for cheie in rezultat:
         print(cheie, ":", rezultat[cheie], "lei")
 
+    return lista
+
+
+def ui_ordonare_in_functie_de_pret(lista):
+    '''
+    Functie care modifica lista de vanzari ordonand-o crescator in functie de pret
+    :param lista: lista de vanzari
+    :return: lista ordonata crescator in functie de pret
+    '''
+    lista = sortare_in_functie_de_pret(lista)
     return lista
 
 
@@ -103,6 +123,8 @@ def run_menu(lista):
             lista = ui_modificare_gen(lista)
         elif optiune == "6":
             lista = ui_pret_minim_gen(lista)
+        elif optiune == "7":
+            lista = ui_ordonare_in_functie_de_pret(lista)
         elif optiune == "a":
             show_all(lista)
         elif optiune == "x":
