@@ -49,12 +49,18 @@ def ui_modificare_vanzare(lista):
     :param lista: lista de vanzari
     :return: lista de vanzari, cu modificarile efectuate pe vanzarea dorita
     '''
-    id = input("Dati id-ul vanzarii pe care doriti sa o modificati: ")
-    titlu_carte = input("Titlu nou: ")
-    gen_carte = input("Genul nou: ")
-    pret = int(input("Noul pret al cartii: "))
-    tip_reducere = input("Tipul nou de reducere: (none/silver/gold) ")
-    return modificare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere,lista)
+
+    try:
+        id = input("Dati id-ul vanzarii pe care doriti sa o modificati: ")
+        titlu_carte = input("Titlu nou: ")
+        gen_carte = input("Genul nou: ")
+        pret = int(input("Noul pret al cartii: "))
+        tip_reducere = input("Tipul nou de reducere: (none/silver/gold): ")
+        return modificare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere,lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
+
 
 def show_all(lista):
     print("Lista vanzarilor: ")
