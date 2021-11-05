@@ -11,15 +11,13 @@ def adaugare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere, lista):
     :param tip_reducere: string
     :return: lista cu prajiturile vechi, actualizata cu cea adaugata acum
     '''
-    try:
-        if get_by_id(id, lista) is not None:
-            raise ValueError("Id-ul exista deja!")
 
-        vanzare = creeaza_vanzare(id, titlu_carte,gen_carte,pret,tip_reducere)
-        return lista + [vanzare]
-    except ValueError as ve:
-        print("Eroare: {}".format(ve))
-        return lista
+
+    vanzare = creeaza_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere)
+    return lista + [vanzare]
+
+
+
 
 def get_by_id(id, lista):
     '''
@@ -40,14 +38,10 @@ def stergere_vanzare(id, lista):
     :param lista: lista de vanzari
     :return: o lista de vanzari cu exceptia vanzarii cu id-ul dat
     '''
-    try:
-        if get_by_id(id, lista) is None:
-            raise ValueError("Nu exista o vanzare cu id-ul dat!")
 
-        return [vanzare for vanzare in lista if get_id(vanzare) != id]
-    except ValueError as ve:
-        print("Eroare: {}".format(ve))
-        return lista
+
+    return [vanzare for vanzare in lista if get_id(vanzare) != id]
+
 
 
 
@@ -61,8 +55,6 @@ def modificare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere, lista):
     :param tip_reducere:
     :return:
     '''
-    if get_by_id(id, lista) is None:
-        raise ValueError("Nu exista o vanzare cu id-ul dat!")
 
     lista_noua = []
     for vanzare in lista:
