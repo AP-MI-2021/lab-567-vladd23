@@ -15,35 +15,51 @@ def print_menu():
     print("7. Ordonarea vânzărilor crescător după preț")
     print("8. Afișarea numărului de titluri distincte pentru fiecare gen")
     print()
+    print("u. Undo")
+    print("r. Redo")
     print("a. Afisarea vanzarilor")
     print("x. Iesire")
     print()
 
 
-def ui_adaugare_vanzare(lista):
+def ui_adaugare_vanzare(lista, undo_list, redo_list):
     '''
     Adauga o vanzare in lista pe baza alegerii userului
     :param lista:
     :return: adauga vanzarea creata in lista
     '''
-    id = input("Dati id-ul: ")
-    titlu_carte = input("Numele cartii: ")
-    gen_carte = input("Genul cartii: ")
-    pret = int(input("Pretul cartii: "))
-    tip_reducere = input("Tipul de reducere (se va alege intre 'none', 'silver' sau 'gold')")
-    return adaugare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere, lista)
+    try:
+        id = input("Dati id-ul: ")
+        titlu_carte = input("Numele cartii: ")
+        gen_carte = input("Genul cartii: ")
+        pret = int(input("Pretul cartii: "))
+        tip_reducere = input("Tipul de reducere (se va alege intre 'none', 'silver' sau 'gold')")
+        rezultat = adaugare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere, lista)
+        redo_list.clear()
+        undo_list.append(lista)
+        return rezultat
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 
-def ui_stergere_vanzare(lista):
+def ui_stergere_vanzare(lista, undo_list, redo_list):
     '''
     Sterge o vanzare din lista pe baza id ului dat de user
     :param lista:
     :return: lista de vanzari fara vanzarea aleasa de user
     '''
-    id = input("Dati id-ul vanzarii pe care o doriti stearsa: ")
-    return stergere_vanzare(id, lista)
+    try:
+        id = input("Dati id-ul vanzarii pe care o doriti stearsa: ")
+        rezultat = stergere_vanzare(id, lista)
+        redo_list.clear()
+        undo_list.append(lista)
+        return rezultat
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
 
-def ui_modificare_vanzare(lista):
+
+def ui_modificare_vanzare(lista, undo_list, redo_list):
     '''
     Modifica o vanzare din lista pe baza id ului
     :param lista: lista de vanzari
@@ -56,7 +72,10 @@ def ui_modificare_vanzare(lista):
         gen_carte = input("Genul nou: ")
         pret = int(input("Noul pret al cartii: "))
         tip_reducere = input("Tipul nou de reducere: (none/silver/gold): ")
-        return modificare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere,lista)
+        rezultat = modificare_vanzare(id, titlu_carte, gen_carte, pret, tip_reducere,lista)
+        redo_list.clear()
+        undo_list.append(lista)
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
@@ -118,26 +137,33 @@ def ui_nr_titluri_distincte_per_gen(lista):
     :param lista: lista de vanzari
     :return: lista de vanzari
     '''
-    rezultat = nr_titluri_distincte_pe_gen(lista)
+    try:
+        rezultat = nr_titluri_distincte_pe_gen(lista)
 
-    for cheie in rezultat:
-        print(cheie, ":", rezultat[cheie], "titluri distincte")
+        for cheie in rezultat:
+            print(cheie, ":", rezultat[cheie], "titluri distincte")
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
 
     return lista
 
 
 def run_menu(lista):
+
+    undo_list = []
+    redo_list = []
+
     while True:
         print()
         print_menu()
         optiune = input("Alegeti optiunea dorita: ")
         print()
         if optiune == "1":
-            lista = ui_adaugare_vanzare(lista)
+            lista = ui_adaugare_vanzare(lista, undo_list, redo_list)
         elif optiune == "2":
-            lista = ui_stergere_vanzare(lista)
+            lista = ui_stergere_vanzare(lista, undo_list, redo_list)
         elif optiune == "3":
-            lista = ui_modificare_vanzare(lista)
+            lista = ui_modificare_vanzare(lista, undo_list, redo_list)
         elif optiune == "4":
             lista = ui_aplicare_discount(lista)
         elif optiune == "5":
@@ -152,5 +178,17 @@ def run_menu(lista):
             show_all(lista)
         elif optiune == "x":
             break
+        elif optiune == "u":
+            if len(undo_list) > 0:
+                redo_list.append(lista)
+                lista = undo_list.pop()
+            else:
+                print("Nu se mai poate efectua functia de undo!")
+        elif optiune == "r":
+            if len(redo_list) > 0:
+                undo_list.append(lista)
+                lista = redo_list.pop()
+            else:
+                print("Nu se poate aplica redo!")
         else:
             print("Optiune invalida! Selectati din nou.")
