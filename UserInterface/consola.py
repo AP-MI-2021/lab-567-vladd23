@@ -88,16 +88,19 @@ def show_all(lista):
         print(to_string(vanzare))
 
 
-def ui_aplicare_discount(lista):
+def ui_aplicare_discount(lista,  undo_list, redo_list):
     '''
     aplica discountul pentru toate tipurile de reducere silver si gold
     :param lista:
     :return: lista cu schimbarile facute
     '''
-    return aplicare_discount(lista)
+    nou = aplicare_discount(lista)
+    redo_list.clear()
+    undo_list.append(lista)
+    return nou
 
 
-def ui_modificare_gen(lista):
+def ui_modificare_gen(lista, undo_list, redo_list):
     '''
     Modifica genul unei carti cu titlul introdus de la tastatura
     :param lista:
@@ -105,7 +108,11 @@ def ui_modificare_gen(lista):
     '''
     titlu = input("Titlul cartii pe care doriti sa il modificati: ")
     gen_nou = input("Noul gen pentru cartea cu titlul selectat: ")
-    return modificare_gen_pentru_titlu(lista, titlu, gen_nou)
+    modificare = modificare_gen_pentru_titlu(lista, titlu, gen_nou)
+    redo_list.clear()
+    undo_list.append(lista)
+
+    return modificare
 
 
 def ui_pret_minim_gen(lista):
@@ -118,7 +125,7 @@ def ui_pret_minim_gen(lista):
     for cheie in rezultat:
         print(cheie, ":", rezultat[cheie], "lei")
 
-    return lista
+
 
 
 def ui_ordonare_in_functie_de_pret(lista):
@@ -128,7 +135,9 @@ def ui_ordonare_in_functie_de_pret(lista):
     :return: lista ordonata crescator in functie de pret
     '''
     lista = sortare_in_functie_de_pret(lista)
-    return lista
+    for vanzare in lista:
+        print(vanzare)
+
 
 
 def ui_nr_titluri_distincte_per_gen(lista):
@@ -145,7 +154,7 @@ def ui_nr_titluri_distincte_per_gen(lista):
     except ValueError as ve:
         print("Eroare: {}".format(ve))
 
-    return lista
+
 
 
 def run_menu(lista):
@@ -165,15 +174,15 @@ def run_menu(lista):
         elif optiune == "3":
             lista = ui_modificare_vanzare(lista, undo_list, redo_list)
         elif optiune == "4":
-            lista = ui_aplicare_discount(lista)
+            lista = ui_aplicare_discount(lista, undo_list, redo_list)
         elif optiune == "5":
-            lista = ui_modificare_gen(lista)
+            lista = ui_modificare_gen(lista, undo_list, redo_list)
         elif optiune == "6":
-            lista = ui_pret_minim_gen(lista)
+            ui_pret_minim_gen(lista)
         elif optiune == "7":
-            lista = ui_ordonare_in_functie_de_pret(lista)
+            print(ui_ordonare_in_functie_de_pret(lista))
         elif optiune == "8":
-            lista = ui_nr_titluri_distincte_per_gen(lista)
+            ui_nr_titluri_distincte_per_gen(lista)
         elif optiune == "a":
             show_all(lista)
         elif optiune == "x":
