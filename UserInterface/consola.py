@@ -52,8 +52,9 @@ def ui_stergere_vanzare(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul vanzarii pe care o doriti stearsa: ")
         rezultat = stergere_vanzare(id, lista)
-        redo_list.clear()
         undo_list.append(lista)
+        redo_list.clear()
+
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -94,10 +95,15 @@ def ui_aplicare_discount(lista,  undo_list, redo_list):
     :param lista:
     :return: lista cu schimbarile facute
     '''
-    nou = aplicare_discount(lista)
-    redo_list.clear()
-    undo_list.append(lista)
-    return nou
+    try:
+        undo_list.append(lista)
+        redo_list.clear()
+        nou = aplicare_discount(lista)
+
+        return nou
+    except ValueError as ve:
+        print("Eraore: {}".format(ve))
+        return lista
 
 
 def ui_modificare_gen(lista, undo_list, redo_list):

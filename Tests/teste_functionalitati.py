@@ -1,31 +1,31 @@
 from Domain.vanzari import get_pret, get_gen, creeaza_vanzare, get_id
-from Logic.CRUD import generare_lista
+from Logic.CRUD import generare_lista, adaugare_vanzare
 from Logic.functionalitati import aplicare_discount, modificare_gen_pentru_titlu, pret_minim_per_gen, \
     sortare_in_functie_de_pret, nr_titluri_distincte_pe_gen
 
 
 def test_aplicare_discount():
 
-    #vanzare1 = ["1", "Ragdoll", "thriller", 50, "gold"]
-    #vanzare2 = ["2", "Winnetou", "aventura", 45, "none"]
-    vanzare1 = creeaza_vanzare("1", "Ragdoll", "thriller", 50, "silver")
-    vanzare2 = creeaza_vanzare("2", "Winnetou", "aventura", 45, "gold")
     lista = []
-    lista.append(vanzare1)
-    lista.append(vanzare2)
-    aplicare_discount(lista)
+    lista = adaugare_vanzare("1", "Carte1", "Drama", 50,"gold", lista)
+    lista = adaugare_vanzare("2", "Carte2", "Aventura", 50, "silver", lista)
+    lista = adaugare_vanzare("3", "Carte3", "Comedie", 50, "none", lista)
 
-    assert get_pret(lista[0]) == 47.5
-    assert get_pret(lista[1]) == 40.5
+    lista_noua = aplicare_discount(lista)
+
+    assert get_pret(lista_noua[0]) == 45.0
+    assert get_pret(lista_noua[1]) == 47.5
+    assert get_pret(lista_noua[2]) == 50.0
+
 
 def test_modificare_gen_pentru_titlu():
     vanzare1 = creeaza_vanzare("1", "Ragdoll", "thriller", 50, "silver")
     vanzare2 = creeaza_vanzare("2", "Winnetou", "aventura", 45, "gold")
 
     lista = []
-    lista.append(vanzare1)
-    lista.append(vanzare2)
-    modificare_gen_pentru_titlu(lista, "Ragdoll", "actiune")
+    lista = adaugare_vanzare("1", "Ragdoll", "thriller", 50, "silver", lista)
+    lista = adaugare_vanzare("2", "Winnetou", "aventura", 45, "gold", lista)
+    lista = modificare_gen_pentru_titlu(lista, "Ragdoll", "actiune")
     assert get_gen(lista[0]) == "actiune"
 
 def test_pret_minim_per_gen():

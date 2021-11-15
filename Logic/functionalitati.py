@@ -1,4 +1,4 @@
-from Domain.vanzari import get_reducere, get_pret, set_pret, get_titlu, set_gen, get_gen
+from Domain.vanzari import get_reducere, get_pret, set_pret, get_titlu, set_gen, get_gen, creeaza_vanzare, get_id
 
 
 def aplicare_discount(lista):
@@ -7,18 +7,30 @@ def aplicare_discount(lista):
     :param lista:
     :return:
     '''
-
+    lista_noua =[]
     for vanzare in lista:
         if get_reducere(vanzare) == "silver":
-            pret_actual = get_pret(vanzare)
-            pret_nou = pret_actual - 5 * pret_actual / 100
-            set_pret(vanzare, pret_nou)
-        if get_reducere(vanzare) == "gold":
-            pret_actual = get_pret(vanzare)
-            pret_nou = pret_actual - 10 * pret_actual / 100
-            set_pret(vanzare, pret_nou)
+            vanzare_noua = creeaza_vanzare(
+                get_id(vanzare),
+                get_titlu(vanzare),
+                get_gen(vanzare),
+                get_pret(vanzare) - (0.05 * get_pret(vanzare)),
+                get_reducere(vanzare)
+            )
+            lista_noua.append(vanzare_noua)
+        elif get_reducere(vanzare) == "gold":
+            vanzare_noua = creeaza_vanzare(
+                get_id(vanzare),
+                get_titlu(vanzare),
+                get_gen(vanzare),
+                get_pret(vanzare) - (0.10 * get_pret(vanzare)),
+                get_reducere(vanzare)
+            )
+            lista_noua.append(vanzare_noua)
+        else:
+            lista_noua.append(vanzare)
 
-    return lista
+    return lista_noua
 
 def modificare_gen_pentru_titlu(lista, titlu, gen_nou):
     '''
@@ -27,11 +39,22 @@ def modificare_gen_pentru_titlu(lista, titlu, gen_nou):
     :param titlu: titlul dupa care se cauta
     :return: lista cu modificari
     '''
+    lista_noua =[]
+
     for vanzare in lista:
         if get_titlu(vanzare) == titlu:
-            set_gen(vanzare, gen_nou)
+            vanzare_noua = creeaza_vanzare(
+                get_id(vanzare),
+                get_titlu(vanzare),
+                gen_nou,
+                get_pret(vanzare),
+                get_reducere(vanzare)
+            )
+            lista_noua.append(vanzare_noua)
+        else:
+            lista_noua.append(vanzare)
 
-    return lista
+    return lista_noua
 
 def pret_minim_per_gen(lista):
     '''
